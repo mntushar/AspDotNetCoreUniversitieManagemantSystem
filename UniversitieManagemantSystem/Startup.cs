@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Models.DbContexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace UniversitieManagemantSystem
 {
@@ -23,6 +25,9 @@ namespace UniversitieManagemantSystem
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<UniversityDbContext>(
+                options => options.UseSqlServer("name=ConnectionStrings:DefaultConnection"));
+
             services.AddControllersWithViews();
         }
 
