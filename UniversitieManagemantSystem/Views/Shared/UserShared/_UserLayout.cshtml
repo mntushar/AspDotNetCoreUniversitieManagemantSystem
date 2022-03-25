@@ -1,0 +1,31 @@
+﻿@{
+    Layout = "~/Views/Shared/_BaseLayout.cshtml";
+}
+
+@section style
+{
+    <link rel="stylesheet" href="~/css/site.css" />
+}
+
+
+@*Rendering navbar page*@
+<partial name="~/Views/Shared/UserShared/Navbar.cshtml" />
+
+<!--Body-->
+<div class="container">
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+</div>
+<!--/Body-->
+
+@*Rendering footer page*@
+<partial name="~/Views/Shared/UserShared/Footer.cshtml" />
+
+
+@section scripts
+    {
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @RenderSection("userscripts", required: false)
+}
