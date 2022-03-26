@@ -15,24 +15,29 @@ namespace Manager.BaseManager
             _baseRepositorie = baseRepositorie;
         }
 
-        public bool Add(T entity)
+        public virtual bool Add(T entity)
         {
-            throw new NotImplementedException();
+            return _baseRepositorie.Add(entity);
         }
 
-        public bool Get(T entity)
+        public virtual T Get(int? id)
         {
-            throw new NotImplementedException();
+            return _baseRepositorie.Get(id);
         }
 
-        public bool Remove(T entity)
+        public virtual ICollection<T> GetAll()
         {
-            throw new NotImplementedException();
+            return _baseRepositorie.GetAll();
         }
 
-        public bool Update(T entity)
+        public virtual bool Remove(T entity)
         {
-            throw new NotImplementedException();
+            return _baseRepositorie.Remove(entity);
+        }
+
+        public virtual bool Update(T entity)
+        {
+            return _baseRepositorie.Update(entity);
         }
     }
 }
