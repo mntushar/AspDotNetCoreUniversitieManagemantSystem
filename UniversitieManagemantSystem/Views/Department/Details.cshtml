@@ -1,0 +1,62 @@
+﻿@model Models.DepartmentModel
+
+@{
+    ViewBag.Title = ViewBag.title;
+    Layout = "~/Views/Shared/AdminShared/_AdminLayout.cshtml";
+}
+
+<section class="content">
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">@ViewBag.title Details</h3>
+
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <dl class="dl-horizontal text-center">
+                <dt>
+                    @Html.DisplayNameFor(model => model.DeptName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.DeptName)
+                </dd>
+
+                <p>
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+                    @Html.ActionLink("Back to List", "DepartmentList")
+                </p>
+            </dl>
+            <div>
+                @{
+                    if (this.ViewContext.RouteData.Values["controller"].ToString() == "Delete")
+                    {
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-4">
+                                @using (Html.BeginForm())
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <br />
+                                    <p class="text-danger">*Do you want to delete it!?</p>
+                                    <button type="submit" id="createStudentButton" class="btn btn-danger">Delete</button>
+                                }
+                            </div>
+                        </div>
+
+                    }
+
+                }
+            </div>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+</section>

@@ -1,0 +1,110 @@
+﻿@model IEnumerable<Models.DepartmentModel>
+
+@{
+    ViewBag.Title = ViewBag.title;
+    Layout = "~/Views/Shared/AdminShared/_AdminLayout.cshtml";
+}
+
+<section class="content">
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-6">
+                    <h3 class="card-title">@ViewBag.title List</h3>
+                </div>
+                <div class="col-6 text-right">
+                    @Html.ActionLink("Create New", "Create", "Department")
+                </div>
+            </div>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <div id="jsGrid1" class="jsgrid" style="position: relative; height: 100%; width: 100%;">
+                <div class="jsgrid-grid-header jsgrid-header-scrollbar">
+                    <table class="jsgrid-table">
+                        <tr class="jsgrid-header-row">
+                            <th class="jsgrid-header-cell jsgrid-header-sortable" style="width: 150px;">@Html.DisplayNameFor(model => model.DeptName)</th>
+                            <th class="jsgrid-header-cell jsgrid-align-right jsgrid-header-sortable" style="width: 50px;">Action</th>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="jsgrid-grid-body">
+                    <table class="jsgrid-table">
+                        <tbody>
+                            @foreach (var dept in Model)
+                            {
+                                <tr class="jsgrid-row">
+
+                                    <td class="jsgrid-cell" style="width: 150px;">
+                                        @Html.DisplayFor(modelItem => dept.DeptName)
+                                    </td>
+                                    <td class="jsgrid-cell jsgrid-align-right" style="width: 50px;">
+                                        @Html.ActionLink("Edit", "Edit", new { id = dept.Id }) |
+                                        @Html.ActionLink("Details", "Details", new { id = dept.Id }) |
+                                        @Html.ActionLink("Delete", "Delete", new { id = dept.Id })
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="jsgrid-pager-container">
+                    <div class="jsgrid-pager">
+                        Pages: <span class="jsgrid-pager-nav-button jsgrid-pager-nav-inactive-button"><a href="javascript:void(0);">First</a></span>
+                        <span class="jsgrid-pager-nav-button jsgrid-pager-nav-inactive-button"><a href="javascript:void(0);">Prev</a></span> <span class="jsgrid-pager-page jsgrid-pager-current-page">1</span>
+                        <span class="jsgrid-pager-page"><a href="javascript:void(0);">2</a></span><span class="jsgrid-pager-page"><a href="javascript:void(0);">3</a></span><span class="jsgrid-pager-page"><a href="javascript:void(0);">4</a></span>
+                        <span class="jsgrid-pager-page"><a href="javascript:void(0);">5</a></span> <span class="jsgrid-pager-nav-button"><a href="javascript:void(0);">Next</a></span>
+                        <span class="jsgrid-pager-nav-button"><a href="javascript:void(0);">Last</a></span> &nbsp;&nbsp; 1 of 5
+                    </div>
+                </div>
+                <div class="jsgrid-load-shader" style="display: none; position: absolute; inset: 0px; z-index: 1000;"></div>
+                <div class="jsgrid-load-panel" style="display: none; position: absolute; top: 50%; left: 50%; z-index: 1000;">Please, wait...</div>
+            </div>
+
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+</section>
+
+
+@*@model IEnumerable<Models.DepartmentModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/AdminShared/_AdminLayout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DeptName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DeptName)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>*@

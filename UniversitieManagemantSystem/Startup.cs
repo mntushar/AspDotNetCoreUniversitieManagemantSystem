@@ -10,6 +10,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Models.DbContexts;
 using Microsoft.EntityFrameworkCore;
+using Manager.Contacts;
+using Manager;
+using Repositories;
+using Repositories.Contacts;
 
 namespace UniversitieManagemantSystem
 {
@@ -29,6 +33,9 @@ namespace UniversitieManagemantSystem
                 options => options.UseSqlServer("name=ConnectionStrings:DefaultConnection"));
 
             services.AddControllersWithViews();
+
+            services.AddTransient<IDepartmentManager, DepartmentManager>();
+            services.AddTransient<IDepartmentRepositorie, DepartmentRepositorie>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,6 +63,10 @@ namespace UniversitieManagemantSystem
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapControllerRoute(
+                    name: "Admin",
+                    pattern: "{controller=Admin}/{action=AdminIndex}/{id?}");
             });
         }
     }
