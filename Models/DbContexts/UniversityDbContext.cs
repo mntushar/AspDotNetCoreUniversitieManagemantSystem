@@ -7,6 +7,11 @@ namespace Models.DbContexts
 {
     public class UniversityDbContext : DbContext
     {
+        public DbSet<DepartmentModel> Department { get; set; }
+
+        public UniversityDbContext()
+        {
+        }
 
         public UniversityDbContext(DbContextOptions<UniversityDbContext> options)
         : base(options)
