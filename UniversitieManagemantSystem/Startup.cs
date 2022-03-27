@@ -24,6 +24,8 @@ namespace UniversitieManagemantSystem
         {
             services.AddDbContext<UniversityDbContext>(
                 options => options.UseSqlServer("name=ConnectionStrings:DefaultConnection"));
+            
+            services.AddAutoMapper(typeof(Startup));
 
             services.AddControllersWithViews();
         }
