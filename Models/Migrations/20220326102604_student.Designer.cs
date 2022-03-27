@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Models.DbContexts;
 
 namespace Models.Migrations
 {
     [DbContext(typeof(UniversityDbContext))]
-    partial class UniversityDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220326102604_student")]
+    partial class student
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,27 +47,13 @@ namespace Models.Migrations
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("DeptId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DeptId");
-
                     b.ToTable("Student");
-                });
-
-            modelBuilder.Entity("Models.StudentModel", b =>
-                {
-                    b.HasOne("Models.DepartmentModel", "Department")
-                        .WithMany("Students")
-                        .HasForeignKey("DeptId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

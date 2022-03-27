@@ -8,6 +8,7 @@ namespace Models.DbContexts
     public class UniversityDbContext : DbContext
     {
         public DbSet<DepartmentModel> Department { get; set; }
+        public DbSet<StudentModel> Student { get; set; }
 
         public UniversityDbContext()
         {
@@ -21,7 +22,9 @@ namespace Models.DbContexts
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             string ConnectionString = "Server=MNTUSHAR;Database=UniversitieManagemantSystem;Trusted_Connection=True;MultipleActiveResultSets=true;";
-            optionsBuilder.UseSqlServer(ConnectionString);
+            optionsBuilder
+                .UseLazyLoadingProxies()
+                .UseSqlServer(ConnectionString);
         }
     }
 }
