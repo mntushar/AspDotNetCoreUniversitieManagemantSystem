@@ -17,7 +17,7 @@
             @Html.AntiForgeryToken()
             <div class="card-body">
                 <div class="form-group row">
-                    @Html.LabelFor(model => model.DeptName, new { @class = "col-sm-2 col-form-label" })
+                    @Html.LabelFor(model => model.DeptName, null, new { @class = "col-sm-2 col-form-label" })
                     <div class="col-sm-10">
                         @Html.EditorFor(model => model.DeptName, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter department name" } })
                         @Html.ValidationMessageFor(model => model.DeptName, "", new { @class = "text-danger" })
@@ -28,7 +28,7 @@
             <!-- /.card-body -->
             <div class="card-footer">
                 <button type="submit" class="btn btn-info">Submit</button>
-                @Html.ActionLink("Back to List", "DepartmentList", "Department", new { @class = "float-right" })
+                @Html.ActionLink("Back to List", "DepartmentList", "Department", null, new { @class = "float-right" })
             </div>
             <!-- /.card-footer -->
         </form>

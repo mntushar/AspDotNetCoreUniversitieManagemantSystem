@@ -1,17 +1,23 @@
-﻿using Manager.Contacts;
-using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Manager.Contacts;
 using Microsoft.AspNetCore.Mvc;
 using Models;
+using System;
+using UniversitieManagemantSystem.Models.Department;
 
 namespace UniversitieManagemantSystem.Controllers
 {
     public class DepartmentController : Controller
     {
         private IDepartmentManager _departmentManager;
+        private string _CustomDataSaveError;
+        private readonly IMapper _mapper;
 
-        public DepartmentController(IDepartmentManager departmentManager)
+        public DepartmentController(IDepartmentManager departmentManager, IMapper mapper)
         {
             _departmentManager = departmentManager;
+            _mapper = mapper;
+            _CustomDataSaveError = new ErrorController().DataSaveCustomError();
             ViewBag.title = "Student Department";
         }
 
@@ -34,7 +40,8 @@ namespace UniversitieManagemantSystem.Controllers
             {
                 return NotFound();
             }
-            return View(department);
+            var departmentVm = _mapper.Map<DepartmentDetailsMv>(department);
+            return View(departmentVm);
         }
 
         // GET: DepartmentController/Create
@@ -46,67 +53,102 @@ namespace UniversitieManagemantSystem.Controllers
         // POST: DepartmentController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(DepartmentModel department)
+        public ActionResult Create([Bind("Id,DeptName")] DepartmentModel department)
         {
             if (ModelState.IsValid)
             {
-                //try
-                //{
+                try
+                {
                     bool isAdd = _departmentManager.Add(department);
                     if (isAdd)
                     {
                         return RedirectToAction(nameof(DepartmentList));
                     }
-                //}
-                //catch (Exception ex)
-                //{
-                //    ModelState.AddModelError("customerror", CustomDataSaveError);
-                //}
+                }
+                catch (Exception)
+                {
+                    ModelState.AddModelError("customerror", _CustomDataSaveError);
+                }
             }
 
             return View(department);
         }
 
-        //    // GET: DepartmentController/Edit/5
-        //    public ActionResult Edit(int id)
-        //    {
-        //        return View();
-        //    }
+        // GET: DepartmentController/Edit/5
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return BadRequest();
+            }
+            DepartmentModel department = _departmentManager.Get(id);
+            if (department == null)
+            {
+                return NotFound();
+            }
+            return View("Create", department);
+        }
 
-        //    // POST: DepartmentController/Edit/5
-        //    [HttpPost]
-        //    [ValidateAntiForgeryToken]
-        //    public ActionResult Edit(int id, IFormCollection collection)
-        //    {
-        //        try
-        //        {
-        //            return RedirectToAction(nameof(Index));
-        //        }
-        //        catch
-        //        {
-        //            return View();
-        //        }
-        //    }
+        // POST: DepartmentController/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind("Id,DeptName")] DepartmentModel department)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    bool isEdit = _departmentManager.Update(department);
+                    if (isEdit) return RedirectToAction(nameof(DepartmentList));
 
-        //    // GET: DepartmentController/Delete/5
-        //    public ActionResult Delete(int id)
-        //    {
-        //        return View();
-        //    }
+                }
+                catch (Exception)
+                {
+                    ModelState.AddModelError("customerror", _CustomDataSaveError);
+                }
+            }
+            return View("Create", department);
+        }
 
-        //    // POST: DepartmentController/Delete/5
-        //    [HttpPost]
-        //    [ValidateAntiForgeryToken]
-        //    public ActionResult Delete(int id, IFormCollection collection)
-        //    {
-        //        try
-        //        {
-        //            return RedirectToAction(nameof(Index));
-        //        }
-        //        catch
-        //        {
-        //            return View();
-        //        }
-        //    }
+        // GET: DepartmentController/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return BadRequest();
+            }
+            DepartmentModel department = _departmentManager.Get(id);
+            if (department == null)
+            {
+                return NotFound();
+            }
+            return View("Details", department);
+        }
+
+        // POST: DepartmentController/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int? id)
+        {
+            if (id == null)
+            {
+                return BadRequest();
+            }
+            DepartmentModel department = _departmentManager.Get(id);
+            if (department != null)
+            {
+                try
+                {
+                    bool isDelete = _departmentManager.Remove(department);
+                    if (isDelete) return RedirectToAction(nameof(DepartmentList));
+
+                }
+                catch (Exception)
+                {
+                    ModelState.AddModelError("customerror", _CustomDataSaveError);
+                }
+            }
+            return BadRequest();
+        }
     }
 }
