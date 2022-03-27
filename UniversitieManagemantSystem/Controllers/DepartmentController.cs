@@ -18,12 +18,12 @@ namespace UniversitieManagemantSystem.Controllers
             _departmentManager = departmentManager;
             _mapper = mapper;
             _CustomDataSaveError = new ErrorController().DataSaveCustomError();
-            ViewBag.title = "Student Department";
         }
 
         // GET: DepartmentController
         public ActionResult DepartmentList()
         {
+            //ViewBag.title = "Student Department";
             var AllDept = _departmentManager.GetAll();
             return View(AllDept);
         }

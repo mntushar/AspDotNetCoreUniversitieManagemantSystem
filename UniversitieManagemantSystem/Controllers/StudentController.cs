@@ -17,7 +17,6 @@ namespace UniversitieManagemantSystem.Controllers
         {
             _studentManager = studentManager;
             _departmentManager = departmentManager;
-            ViewBag.title = "Student";
             _CustomDataSaveError = new ErrorController().DataSaveCustomError();
     }
 

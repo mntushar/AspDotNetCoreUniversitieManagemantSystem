@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Models.DepartmentModel>
 
 @{
-    ViewBag.Title = ViewBag.title;
+    ViewBag.Title = "Student Department";
     Layout = "~/Views/Shared/AdminShared/_AdminLayout.cshtml";
 }
 
@@ -10,7 +10,7 @@
         <div class="card-header">
             <div class="row">
                 <div class="col-6">
-                    <h3 class="card-title">@ViewBag.title List</h3>
+                    <h3 class="card-title">@ViewBag.Title List</h3>
                 </div>
                 <div class="col-6 text-right">
                     @Html.ActionLink("Create New", "Create", "Department")
