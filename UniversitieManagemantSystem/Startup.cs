@@ -1,19 +1,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Models.DbContexts;
 using Microsoft.EntityFrameworkCore;
-using Manager.Contacts;
-using Manager;
-using Repositories;
-using Repositories.Contacts;
+using Autofac;
+using UniversitieManagemantSystem.ConfigureServices;
 
 namespace UniversitieManagemantSystem
 {
@@ -33,9 +26,12 @@ namespace UniversitieManagemantSystem
                 options => options.UseSqlServer("name=ConnectionStrings:DefaultConnection"));
 
             services.AddControllersWithViews();
+        }
 
-            services.AddTransient<IDepartmentManager, DepartmentManager>();
-            services.AddTransient<IDepartmentRepositorie, DepartmentRepositorie>();
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            // This will all go in the ROOT CONTAINER and is NOT TENANT SPECIFIC.
+            builder.RegisterModule(new AutofacModule());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
