@@ -10,7 +10,7 @@ namespace Repositories.BaseRepositorie
 {
     public abstract class BaseRepositorie<T> : IBaseRepositorie<T> where T : class
     {
-        private UniversityDbContext _db;
+        protected UniversityDbContext _db;
         private DbSet<T> Table
         {
             get { return _db.Set<T>(); }
