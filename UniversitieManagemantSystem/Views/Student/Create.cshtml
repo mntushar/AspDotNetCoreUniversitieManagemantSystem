@@ -1,0 +1,58 @@
+﻿@model Models.StudentModel
+
+@{
+    ViewBag.Title = ViewBag.title;
+    Layout = "~/Views/Shared/AdminShared/_AdminLayout.cshtml";
+}
+
+
+<div class="content">
+    <div class="card card-info">
+        <div class="card-header">
+            <h3 class="card-title">@ViewBag.title Form</h3>
+        </div>
+        <!-- /.card-header -->
+        <!-- form start -->
+        <form class="form-horizontal" method="post">
+            @Html.AntiForgeryToken()
+            <div class="card-body">
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.Name, new { @class = "col-sm-2 col-form-label" })
+                    <div class="col-sm-10">
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter name" } })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.DateOfBirth, new { @class = "col-sm-2 col-form-label" })
+                    <div class="col-sm-10">
+                        @Html.EditorFor(model => model.DateOfBirth, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.DeptId, htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                    <div class="col-sm-10">
+                        @Html.DropDownListFor(model => model.DeptId, (IEnumerable<SelectListItem>)ViewBag.departments, "--Select Department--", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.DeptId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <p class='text-center text-danger'>@Html.ValidationMessage("customerror")</p>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+                <button type="submit" class="btn btn-info">Submit</button>
+                @Html.ActionLink("Back to List", "StudentList", "Student", null, new { @class = "float-right" })
+            </div>
+            <!-- /.card-footer -->
+        </form>
+    </div>
+</div>
+
+
+
+@section adminscripts
+{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+}

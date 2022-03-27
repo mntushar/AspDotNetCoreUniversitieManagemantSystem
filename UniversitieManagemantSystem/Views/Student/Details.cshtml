@@ -1,0 +1,87 @@
+﻿@model Models.StudentModel
+
+@{
+    ViewBag.Title = ViewBag.title;
+    Layout = "~/Views/Shared/AdminShared/_AdminLayout.cshtml";
+}
+
+<section class="content">
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">@ViewBag.title Details</h3>
+
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-4 m-auto">
+                    <div>
+                        <span class="font-weight-bold">
+                            @Html.DisplayNameFor(model => model.Name):
+                        </span>
+
+                        @Html.DisplayFor(model => model.Name)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4 m-auto">
+                    <div>
+                        <span class="font-weight-bold">
+                            @Html.DisplayNameFor(model => model.DateOfBirth):
+                        </span>
+
+                        @Html.DisplayFor(model => model.DateOfBirth)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4 m-auto">
+                    <div>
+                        <span class="font-weight-bold">
+                            @Html.DisplayNameFor(model => model.Department):
+                        </span>
+
+                        @Html.DisplayFor(model => model.Department.DeptName)
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <p class="col-4 m-auto">
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+                    @Html.ActionLink("Back to List", "StudentList")
+                </p>
+            </div>
+            <div>
+                @{
+                    if (this.ViewContext.RouteData.Values["action"].ToString() == "Delete")
+                    {
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-4">
+                                @using (Html.BeginForm())
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <br />
+                                    <p class="text-danger">*Do you want to delete it!?</p>
+                                    <button type="submit" id="createStudentButton" class="btn btn-danger">Delete</button>
+                                }
+                            </div>
+                        </div>
+
+                    }
+
+                }
+            </div>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+</section>
