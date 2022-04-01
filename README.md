@@ -2,7 +2,7 @@
 ■ This is a University management system web app. Then admin can do entry department, student and course. Admin also registration students with the course.
 
 ■ Back-End:<br />
-__ Developed backend using ASP.Net Core.
+- Developed backend using ASP.Net Core.
 
 ■ Font-End:<br />
 Developed front end using AngularJS HTML, CSS, Bootstrap 4 and JS.
