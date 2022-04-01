@@ -5,7 +5,7 @@
 &nbsp;Developed backend using ASP.Net Core.
 
 ■ Font-End:<br />
-___ Developed front end using AngularJS HTML, CSS, Bootstrap 4 and JS.
+____ Developed front end using AngularJS HTML, CSS, Bootstrap 4 and JS.
 
 ■ Design principle:<br />
 __SOLID
