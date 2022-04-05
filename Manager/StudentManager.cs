@@ -36,5 +36,13 @@ namespace Manager
                 return false;
             }
         }
+
+        public override bool Update(StudentModel entity)
+        {
+            DepartmentModel department = _departmentManager.Get(entity.DeptId);
+            if(department == null) return false;
+            return _studentRepositore.Update(entity);
+           
+        }
     }
 }

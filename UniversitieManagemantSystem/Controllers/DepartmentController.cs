@@ -122,7 +122,8 @@ namespace UniversitieManagemantSystem.Controllers
             {
                 return NotFound();
             }
-            return View("Details", department);
+            var departmentMv = _mapper.Map<DepartmentDetailsMv>(department);
+            return View("Details", departmentMv);
         }
 
         // POST: DepartmentController/Delete/5

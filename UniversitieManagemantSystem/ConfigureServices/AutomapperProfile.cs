@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Models;
 using UniversitieManagemantSystem.Models.Department;
+using UniversitieManagemantSystem.Models.Student;
 
 namespace UniversitieManagemantSystem.ConfigureServices
 {
@@ -10,6 +11,12 @@ namespace UniversitieManagemantSystem.ConfigureServices
         {
             CreateMap<DepartmentDetailsMv, DepartmentModel>();
             CreateMap<DepartmentModel, DepartmentDetailsMv>();
+
+            CreateMap<StudentModel, StudentCreateMv>();
+            CreateMap<StudentCreateMv, StudentModel>();
+
+            CreateMap<StudentModel, StudentEditMv>();
+            CreateMap<StudentEditMv, StudentModel>();
         }
     }
 }

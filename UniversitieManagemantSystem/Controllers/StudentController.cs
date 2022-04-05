@@ -1,9 +1,12 @@
-﻿using Manager.Contacts;
-using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Manager.Contacts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Models;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using UniversitieManagemantSystem.Models.Student;
 
 namespace UniversitieManagemantSystem.Controllers
 {
@@ -12,11 +15,13 @@ namespace UniversitieManagemantSystem.Controllers
         private IStudentManager _studentManager;
         private IDepartmentManager _departmentManager;
         private string _CustomDataSaveError;
+        private readonly IMapper _mapper;
 
-        public StudentController(IStudentManager studentManager, IDepartmentManager departmentManager)
+        public StudentController(IStudentManager studentManager, IDepartmentManager departmentManager, IMapper mapper)
         {
             _studentManager = studentManager;
             _departmentManager = departmentManager;
+            _mapper = mapper;
             _CustomDataSaveError = new ErrorController().DataSaveCustomError();
     }
 
@@ -45,79 +50,111 @@ namespace UniversitieManagemantSystem.Controllers
         // GET: StudentControlar/Create
         public ActionResult Create()
         {
-            ViewBag.departments = new SelectList(_departmentManager.GetAll(), "Id", "DeptName");
-            return View();
+            StudentCreateMv stdent = new StudentCreateMv();
+            List<SelectListItem> Departments = _departmentManager.GetAll().Select(d => new SelectListItem() 
+            { 
+                Value = d.Id.ToString(),
+                Text = d.DeptName
+            }).ToList();
+            stdent.Departments = Departments;
+            return View(stdent);
         }
 
         // POST: StudentControlar/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("Id,Name,DateOfBirth,DeptId")] StudentModel student)
+        public ActionResult Create([Bind("Id,Name,DateOfBirth,DeptId")] StudentCreateMv student)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    bool isAdd = _studentManager.Add(student);
-                        if (isAdd)
-                        {
-                            return RedirectToAction(nameof(StudentList));
-                        }
-                        else
-                        {
-                            ModelState.AddModelError(nameof(StudentModel.DeptId), "Please select department");
-                        }
+                    var sudentModel = _mapper.Map<StudentModel>(student);
+                    bool isAdd = _studentManager.Add(sudentModel);
+                    if (isAdd)
+                    {
+                        return RedirectToAction(nameof(StudentList));
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(nameof(StudentModel.DeptId), "Please select department");
+                    }
                 }
                 catch (Exception)
                 {
                     ModelState.AddModelError("customerror", _CustomDataSaveError);
                 }
             }
-       
-            ViewBag.departments = new SelectList(_departmentManager.GetAll(), "Id", "DeptName");
+
+            student.Departments = _departmentManager.GetAll().Select(d=> new SelectListItem() 
+            { 
+                Value = d.Id.ToString(),
+                Text = d.DeptName
+            }).ToList();
             return View(student);
         }
 
-        //// GET: StudentControlar/Edit/5
-        //public ActionResult Edit(int id)
-        //{
-        //    return View();
-        //}
+        // GET: StudentControlar/Edit/5
+        public ActionResult Edit(int? id)
+        {
+            if (id == null) return BadRequest();
+            var student = _studentManager.Get(id);
+            if(student == null)
+            {
+                return NotFound();
+            }
+            var studentmv = _mapper.Map<StudentEditMv>(student);
+            studentmv.Departments = _departmentManager.GetAll().Select(d => new SelectListItem()
+            {
+                Value = d.Id.ToString(),
+                Text = d.DeptName
+            }).ToList();
+            return View(studentmv);
+        }
 
-        //// POST: StudentControlar/Edit/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
+        // POST: StudentControlar/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind("Id,Name,DateOfBirth,DeptId")] StudentEditMv student)
+        {
+            if (ModelState.IsValid)
+            {
+                var studentModel = _mapper.Map<StudentModel>(student);
+                if (studentModel == null) return BadRequest();
+           
+                bool isEdit = _studentManager.Update(studentModel);
 
-        //// GET: StudentControlar/Delete/5
-        //public ActionResult Delete(int id)
-        //{
-        //    return View();
-        //}
+                if (isEdit) return RedirectToAction(nameof(StudentList));
+                else ModelState.AddModelError(nameof(StudentModel.DeptId), "Please select department"); 
+            }
+            student.Departments = _departmentManager.GetAll().Select(d => new SelectListItem()
+            {
+                Value = d.Id.ToString(),
+                Text = d.DeptName
+            }).ToList();
+            return View(student);
+        }
 
-        //// POST: StudentControlar/Delete/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Delete(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
+        // GET: StudentControlar/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null) return BadRequest();
+            StudentModel student = _studentManager.Get(id);
+            return View("Details", student);
+        }
+
+        // POST: StudentControlar/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int? id)
+        {
+            if (id == null) return BadRequest();
+            StudentModel student = _studentManager.Get(id);
+            if (student == null) return BadRequest();
+            bool isDelete = _studentManager.Remove(student);
+            if (isDelete) return RedirectToAction(nameof(StudentList));
+
+            return BadRequest();
+        }
     }
 }
