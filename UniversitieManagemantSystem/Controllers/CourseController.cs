@@ -55,45 +55,52 @@ namespace UniversitieManagemantSystem.Controllers
         }
 
         // GET: CourseModels/Edit/5
-        // public ActionResult Edit(int id)
-        // {
-        //     return View();
-        // }
+        public ActionResult Edit(int? id)
+        {
+            if (id == null) return BadRequest();
+            var course = _courseManager.Get(id);
+            if (course == null) return BadRequest();
+
+            return View("Create", course);
+        }
 
         // POST: CourseModels/Edit/5
-        // [HttpPost]
-        // [ValidateAntiForgeryToken]
-        // public ActionResult Edit(int id, IFormCollection collection)
-        // {
-        //     try
-        //     {
-        //         return RedirectToAction(nameof(Index));
-        //     }
-        //     catch
-        //     {
-        //         return View();
-        //     }
-        // }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind("Id,Title,SeatCount,Fee")] CourseModel course)
+        {
+            if (ModelState.IsValid)
+            {
+                bool isEdit = _courseManager.Update(course);
+                if (isEdit) return RedirectToAction(nameof(CourseList));
+            }
+
+            return View("Create", course);
+        }
 
         // GET: CourseModels/Delete/5
-        // public ActionResult Delete(int id)
-        // {
-        //     return View();
-        // }
+        public ActionResult Delete(int? id)
+        {
+            if (id == null) return BadRequest();
+            var course = _courseManager.Get(id);
+            if (course == null) return BadRequest();
+
+            return View("Details", course);
+        }
 
         // POST: CourseModels/Delete/5
-        // [HttpPost]
-        // [ValidateAntiForgeryToken]
-        // public ActionResult Delete(int id, IFormCollection collection)
-        // {
-        //     try
-        //     {
-        //         return RedirectToAction(nameof(Index));
-        //     }
-        //     catch
-        //     {
-        //         return View();
-        //     }
-        // }
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int? id)
+        {
+            if (id == null) return BadRequest();
+            var course = _courseManager.Get(id);
+            if (course == null) return BadRequest();
+
+            bool isDelete = _courseManager.Remove(course);
+            if (isDelete) return RedirectToAction(nameof(CourseList));
+
+            return BadRequest();
+        }
     }
 }
