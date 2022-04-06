@@ -27,7 +27,7 @@ namespace UniversitieManagemantSystem.ConfigureServices
             builder.RegisterType<StudentRepositore>().As<IStudentRepositore>();
 
             builder.RegisterType<CourseManager>().As<ICourseManager>();
-            builder.RegisterType<CourseRepositore>().As<CourseRepositore>();
+            builder.RegisterType<CourseRepositore>().As<ICourseRepositorie>();
         }
     }
 }
