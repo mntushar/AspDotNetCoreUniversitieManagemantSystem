@@ -83,9 +83,7 @@ namespace Models.Migrations
             modelBuilder.Entity("Models.StudentRegistrationModel", b =>
                 {
                     b.Property<int>("StudentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
@@ -98,6 +96,8 @@ namespace Models.Migrations
 
                     b.HasKey("StudentId");
 
+                    b.HasIndex("CourseId");
+
                     b.ToTable("StudentRegistration");
                 });
 
@@ -106,6 +106,21 @@ namespace Models.Migrations
                     b.HasOne("Models.DepartmentModel", "Department")
                         .WithMany("Students")
                         .HasForeignKey("DeptId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Models.StudentRegistrationModel", b =>
+                {
+                    b.HasOne("Models.CourseModel", "Course")
+                        .WithMany("StudentRegistration")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Models.StudentModel", "Student")
+                        .WithOne("StudentRegistration")
+                        .HasForeignKey("Models.StudentRegistrationModel", "StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

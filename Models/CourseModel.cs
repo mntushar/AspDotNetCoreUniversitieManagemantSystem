@@ -20,6 +20,6 @@ namespace Models
 
 
         //navigration proprty
-        //public virtual List<StudentRegistrationModels> StudentRegistration { get; set; }
+        public virtual List<StudentRegistrationModel> StudentRegistration { get; set; }
     }
 }

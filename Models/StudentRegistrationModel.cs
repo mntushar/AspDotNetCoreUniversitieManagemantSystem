@@ -20,7 +20,7 @@ namespace Models
 
 
         //navigration proprty
-        //public virtual StudentModel Student { get; set; }
-        //public virtual CourseModels Course { get; set; }
+        public virtual StudentModel Student { get; set; }
+        public virtual CourseModel Course { get; set; }
     }
 }

@@ -7,6 +7,12 @@
   <ItemGroup>
     <Compile Remove="Migrations\20220326102212_student.cs" />
     <Compile Remove="Migrations\20220326102212_student.Designer.cs" />
+    <Compile Remove="Migrations\20220406103525_relStudentAndCourseAndRegistration.cs" />
+    <Compile Remove="Migrations\20220406103525_relStudentAndCourseAndRegistration.Designer.cs" />
+    <Compile Remove="Migrations\20220406104153_relStudentAndCourseAndRegristration.cs" />
+    <Compile Remove="Migrations\20220406104153_relStudentAndCourseAndRegristration.Designer.cs" />
+    <Compile Remove="Migrations\20220406105735_createStudentRegristration.cs" />
+    <Compile Remove="Migrations\20220406105735_createStudentRegristration.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

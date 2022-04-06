@@ -16,6 +16,6 @@ namespace Models
 
         //navigration proprty
         public virtual DepartmentModel Department { get; set; }
-        //public virtual StudentRegistrationModels StudentRegistration { get; set; }
+        public virtual StudentRegistrationModel StudentRegistration { get; set; }
     }
 }
