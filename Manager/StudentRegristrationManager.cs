@@ -10,9 +10,9 @@ namespace Manager
 {
     public class StudentRegristrationManager : BaseManager<StudentRegistrationModel>, IStudentRegristrationManager
     {
-        private IStudentRegristration _baseRepositorie;
+        private IStudentRegristrationRepositorie _baseRepositorie;
 
-        public StudentRegristrationManager(IStudentRegristration baseRepositorie) : base(baseRepositorie)
+        public StudentRegristrationManager(IStudentRegristrationRepositorie baseRepositorie) : base(baseRepositorie)
         {
             _baseRepositorie = baseRepositorie;
         }
