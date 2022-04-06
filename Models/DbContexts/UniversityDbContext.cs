@@ -10,6 +10,7 @@ namespace Models.DbContexts
         public DbSet<DepartmentModel> Department { get; set; }
         public DbSet<StudentModel> Student { get; set; }
         public DbSet<CourseModel> Courses { get; set; }
+        public DbSet<StudentRegistrationModel> StudentRegistration { get; set; }
 
         public UniversityDbContext()
         {
