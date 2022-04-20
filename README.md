@@ -6,6 +6,7 @@
 - Asp.Net Core Web API
 
 ■ Font-End Technology:<br />
+- Razor
 - AngularJS 
 - HTML
 - CSS 
@@ -14,6 +15,7 @@
 
 ■ Design principle:<br />
 - SOLID
+- MVC
 
 ■ Using helper tools:<br />
 - AutoFact
