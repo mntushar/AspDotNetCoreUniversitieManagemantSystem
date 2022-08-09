@@ -6,10 +6,10 @@ namespace Repositories.Contacts
 {
     public interface IBaseRepositorie<T> where T : class
     {
-        public bool Add(T entity);
-        public bool Update(T entity);
-        public bool Remove(T entity);
-        public T Get(int? id);
-        public ICollection<T> GetAll();
+        bool Add(T entity);
+        bool Update(T entity);
+        bool Remove(T entity);
+        T Get(int? id);
+        ICollection<T> GetAll();
     }
 }
