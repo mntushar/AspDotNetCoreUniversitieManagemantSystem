@@ -6,7 +6,7 @@
 - Asp.Net Core Web API
 
 ■ Font-End Technology:<br />
-- Razor
+- MVC
 - AngularJS 
 - HTML
 - CSS 
